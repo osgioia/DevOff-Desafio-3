@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOff Desafio 3</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <canvas class="canvas" width="200px" height="200px"></canvas>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span>Page:</span>
+            <input type="text" id="canvas_width" size="5" maxlength="5" value="500">
+            <input type="text" id="canvas_height" size="5" maxlength="5" value="500">
+            <button onclick="ChangeSize()">Apply</button>
+            <span>Width: </span>
+            <input type="range" id="size" value="1" min="1" max="10" init="1"><span id="size_span">0</span>
+            <span>Color: </span>
+            <input type="color" id="colorDialogID">
+            <label for="texture_lbl">Texture:</label>
+            <select name="texture" id="texture">
+                <option value="none">None</option>
+                <option value="tex1">Texture 1</option>
+                <option value="tex2">Texture 2</option>
+                <option value="tex3">Texture 3</option>
+            </select>
+
+
+            <a href="#" id="Erase" alt="Erase">
+                <img width="20px" height="20px"
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAZlBMVEX///8AAADo6OiFhYU5OTn8/PxbW1tpaWlYWFjZ2dkzMzNmZmZjY2OMjIza2trr6+uZmZnw8PDGxsYkJCRGRkZycnKmpqZMTEwUFBS0tLQuLi6RkZGenp7Q0NAMDAwcHBy9vb2wsLAVEXATAAAFJElEQVR4nO3djVbiMBAF4FRkdVVUQFfFVfH9X3KJx13ahSaTZu78cHIfIKeftySlliaElpaWlpaWlpaWlpYW/5mvFjfr9+7943K2XWofDCCr666fyxftA2LOdt0d5Jf2QTHm7OHQt8v6p/aBceXlqC/mXvvQeHI/Cuy6R+2D48gsAey6H9qHV5808ASIOeBu3dA+xLrkgc5bpABdt0gDOiZSgW6JdKBTYgnQ5XRTBnTYYinQXYvlQGctTgG6anEa0FGLU4FuiNOBTog1QBfEOqCD6aYWaL7FeqDxFjmAplvkARpukQtotkU+oFEiJ9AkkRdokMgNNDfd8AONtYgAmmoRAzTUIgpopkUc0EiLSKAJIhZogIgGqhPxQOXpRgKo2qIMULFFKaBai3JApRYlgSotygIViNJAcaI8UJioARSdbnSAgi1qAcVa1AMKtagJFGlRFyjQojYQTtQHgokWgFCiDSBwurEChLVoBwhq0RIQ0qItIKBFa0D2Fu0BmYkWgaxEm0BGolUg23RjF8jUomUgS4u2gQwtWgdWt2gfWNmiB2AV0QewgugFOJnoBzjxd/2egJPezkAF3r5Cj5yc4ndsUIG7gRfQI6dmjQNaIZa9DKYIaIUIBBohfgKBNohPSKANIvX1WpOAJogrKNACcYEFGiBegIH6xCs0UJ34DAeqE/FAZWK2QwagLnHDBLxND6NIzMylLA3qEtPrIRtQkZi8pmEE6hFT16WswBB0bmykvlswA5WIibfasgN1iPXAzDIxjPxncfw+DaBBDeL4cg9pMEb4RB09PlCD4sTRcxQIFCXOVICCn8XRK1IwUKzFazWgUIt6DcYItHhTCyxeJoaBt6jbYAy4Re0GY1Jvna+OfoNgouYsKkK0AoQR7QBBxGogwyQDJdqYZIDE0WXiN3EA1gYBxNEGt8QBAJvcsBJHG7wjDsDeIDNx/Ab+E20A0DZFbMTRWZR6jkIaZCSOA8MHaQDgRlMsxASQViF0Jy0GYgIYLikDwE5RJmLqv4RLygDwvdAqiaPLRMyKMAC4wWpi+v+8hG/bIrvZVRCTDYZwkR1AoMEqYu6pp01uALH9CCcSU7PoV54zAwg1GDOJmAWGzABvArJ/mUAkPJj3nh7hAe/qpZiYbzCEI7udDnI+h7t6KSSSHq3MXtKco1WDFBEzy8R38vcvzLZIajC1p+ueiDX9FzKR1mAIZ4SxRFskXSh35AYDYcnvRFuk/MVjKLPod0j32cRapN4zojcYwpw0olCLgAYD9d+VIkRqg2VAYokSJyq1wZJT9CvEm23wFqkNUpeJXh6JRGyLsAZjjm9Vf0jkRvUDbDDmnEjEtQhtcJf5FZHIquoFs0z0M9dtEbRMDKLaIr7BGHKLTKpeJBqMUTtR0ZPMPkotgpeJQVRalGswRmG6kWwwRrxFxPfBdIRblJpF+xFtUQMo2qLMQn8YsUVDp8EYoRNVdpkYRqRF6WViGIEWtT6DfwOfbnQbjAG3qDfJ7ANtUf5K5ljILZ4V55YIfFqWj91P9g1KxBYNZ7PladFyXk+fmHmY5ASIuVd8+id+ZITkRcNuckL/LWaF7lvMC723SBA6b5Ei9N0iSeiaSBN6JhKFjolUod/phix02yJd6LXFAqHTFkuEPlssErpssUzokVgodEgsFRJ/kWko5UJn+5SUbnHxlbfcr8EsZfSlbekY2WSFkrtpwhA+iY+kaoe4ccDRLLeLiyvb5+tmNrnBlpaWlpaWlpaWlpaWYf4ALQRx9Tcv0MoAAAAASUVORK5CYII=">
+
+            </a>
+            <a href="#" id="Saveimage" alt="Save">
+                <img width="20px" height="20px"
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAclBMVEX///8AAADo6Ojj4+MfHx+AgICzs7NqamrPz8/Kysr29vZgYGDS0tJLS0sqKipzc3O+vr6lpaU7OzuHh4fx8fERERE0NDSXl5fb29vm5uYkJCSQkJCqqqovLy9WVla7u7t6enoYGBiUlJRHR0dAQEBRUVFBv2+oAAAEHElEQVR4nO3dbVOyQBSHcSSjRCsVn7LC7OH7f8Xumfs0GnBgjxx29zj/6200u78AcRKXJEEIIYQQuuJWN7ZKZbx0O12ObfVWFrvckXfzMh3Z7Hvu5CtDz7NPm5tO4GvoOfatazduQ0+wf4dWYBZ6egqtd23nYOjZqXRseUl9CD05nQoWOA89Na3YnWj1Mlgr487CY+iZafXECGehJ6bWftUsPISemF7M2/BF6HnpxQjNv2E7xQibzsP3w7zW8u8mi8qPD1lXxW1H088HqjJWWZ9N1nQFYIT3tQ2bL52V7brfzfeo8ld/btomv7tYeNu83cSj0G2s2m50FTLbxSd0nXl1u7deo+rkNlY+vkzIvTOIT1g7TB2FzGkYo7D6WgMhhBAqBiEFIQWhcFSVIKQgpCAUjqoShBSEFITCUVWCkIKQglA4qkoQUhBSEApHVQlCCkIKQuGoKkFIQUhBKBxVJQgpCCkIhaOqBCEFIQWhcFSVIKQgpCAUjqoShBSEFITCUVWCkIKQglA4qkoQUhBSEApHVQlCCkIKQuGoKkFIQUhdKFxoSLheYhDuZxqU5tJ1DMLRuMgm5+1yrSb7ylCBhKptlqfWtZ9eg7A9T8KAa6B4Eu7qR4+n9tzSgcrC5MuXqNoDtzyStrDwJarGzkhbGGzRM3YlNm1h8uSL9DdukYcBhKkv05/W7Hz0hWEuiS2rBeoLQyxe1/b2dwBhMtn4kv1v2bbe4yDCZLWtLgozYG8vzApsQwr/vd4ciqmXtpN232DCiIKQgjDiIKQgjDgIKQgjDkIKwoiDkIIw4iCkIIw4CCkIIw5CqqcwT2da7YSPifMinJXj40it474U3aXjQTjA803an73lW5gO8RlG62cxvoWDPK5NMP7wwkGeKFjGJBzkcWabrk+czAsf3a8ZEEIoEn4suD6vQzjlN5LevxGpkL9vSXwTDoQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEII4W/F1QsFIxgVjo7OQ1gVjpauY5gVOt8OYVc4WrsRDQsdh7EsdDsXTQudiEaEz9W1w35H6j4XjQiTnFk8qPvlxoqwtojfb5uusewIuSWgus5FQ0KO2HHptyTkbvdtPxdNCTli63i2hNyB+tWyF40JOeKUW/EuuDB/FAq5i8Y3SwwsrK2u1v2bzLn4yREDC2/lQm4vlsy5eLr9V1Poeq9+VvtVl78Ndy6mTavhnn0naLNi18wVLyg5d1qK975hjUOnvR9sgUuN3I7vQb7p4ynHM9gw0fU1yuyBunf+PpFV4p0rMEleQ8/1sj7chQ2XGgs9C4Qm9+K7BJgki9Dzlef+vUWjxEwINHcuSl5mTBIFn+ueZedAPcoPUVvEJ/d/fFSzcNF43PZ6qM88i7y59BqBEEIIIYSQz34Ae6aUZncwMcUAAAAASUVORK5CYII=">
+
+            </a>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+</body>
+<script>
+    const canvas = document.querySelector(".canvas")
+    const SaveImage = document.getElementById("Saveimage")
+    const Erase = document.getElementById("Erase")
+    const ColorDialog = document.getElementById("colorDialogID")
+    const sizePicker = document.getElementById('size');
+    const Texture = document.getElementById('texture')
+
+
+    const ctx = canvas.getContext('2d')
+    let color = 'black';
+    let mouseDown = false
+    let lineWidth = 1
+    let x = 0
+    let y = 0
+    let selectColor
+
+    let patternImage = new Image();
+
+    patternImage.onload = () => {
+        let pattern = ctx.createPattern(patternImage, 'repeat');
+        color = pattern;
+    }
+
+
+    function ChangeSize() {
+        let width = document.getElementById("canvas_width").value
+        let height = document.getElementById("canvas_height").value
+
+
+        canvas.width = width
+        canvas.height = height
+    }
+
+    Texture.addEventListener("change", (e) => {
+
+        switch (e.target.value) {
+            case 'tex1':
+                let gradient = ctx.createLinearGradient(75, 75, 175, 75);
+                gradient.addColorStop(0, 'red');
+                gradient.addColorStop(1, 'green');
+                color = gradient;
+                break;
+            case 'tex2':
+                patternImage.src = './img/tex2.jpg';
+                console.log(patternImage)
+                break;
+            case 'tex3':
+                patternImage.src = './img/tex3.jpg';
+                break;
+            case 'none':
+                patternImage.src = '';
+                color = selectColor
+                break;
+
+        }
+
+    })
+
+
+    ColorDialog.addEventListener("change", (e) => {
+        color = e.target.value
+        selectColor = e.target.value
+    })
+
+    sizePicker.addEventListener('change', (e) => {
+        lineWidth = e.target.value
+        document.getElementById('size_span').innerHTML = lineWidth
+    })
+
+
+    SaveImage.addEventListener('click', (e) => {
+        SaveImage.href = canvas.toDataURL("image/png").replace(/^data:image\/[^;]/, 'data:application/octet-stream')
+    })
+
+    Erase.addEventListener('click', (e) => {
+        color = 'white';
+    })
+
+    canvas.addEventListener('mousedown', (e) => {
+        mouseDown = true
+        x = e.offsetX
+        y = e.offsetY
+    })
+
+    canvas.addEventListener('mouseup', (e) => {
+        mouseDown = false
+    })
+
+    canvas.addEventListener('mousemove', (e) => {
+        if (mouseDown === true) {
+
+            ctx.beginPath()
+            ctx.strokeStyle = color
+            ctx.lineWidth = lineWidth
+            ctx.lineJoin = "round"
+            ctx.moveTo(x, y)
+            ctx.lineTo(e.offsetX, e.offsetY)
+            ctx.stroke()
+            ctx.closePath()
+
+            x = e.offsetX
+            y = e.offsetY
+        }
+    })
+
+
+</script>
+
+</html>
